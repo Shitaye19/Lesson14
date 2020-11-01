@@ -209,8 +209,10 @@ for(cntry in country_list) {
 ## this code is not working and couldn't figure out the error  
   
 
+est <- readr::read_csv('https://raw.githubusercontent.com/OHI-Science/data-science-training/master/data/countries_estimated.csv')
 
 
+gapminder_est<-left_join(gapminder, est)
 
 
 
