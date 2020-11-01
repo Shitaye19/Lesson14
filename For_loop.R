@@ -83,6 +83,8 @@ my_plot <- ggplot(data = gap_to_plot, aes(x = year, y = gdpPercap))+
   
   
   
+  
+  
 
 
 
