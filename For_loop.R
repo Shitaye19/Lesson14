@@ -215,6 +215,39 @@ est <- readr::read_csv('https://raw.githubusercontent.com/OHI-Science/data-scien
 gapminder_est<-left_join(gapminder, est)
 
 
+dir.create("figures_Europe")
+
+gap_europe<-gapminder %>% 
+  
+  filter(continent == "Europe") %>% 
+  
+  mutate(gdpPercap_mean = dplyr::cummean(gdpPercap))
+
+country_list <- unique(gap_europe$country)
+
+for(cntry in country_list) {
+  
+  gap_to_plot <- gap_europe %>% 
+    
+    filter(country == cntry)
+  
+  ## add a print message to see what's plotting
+  
+  print(paste("Plotting", cntry))
+  
+  ## plot
+  
+  my_plot <-  ggplot(data = gap_to_plot, aes(x = year, y = gdpPercap_mean)) +
+    
+    geom_point()+
+    
+    labs(title = paste(cntry, "GDP per capita", sep = " "))
+  
+  ## if estimated, add that as a subtitle
+  
+  if (gap_to_plot$)
+  
+  
 
 
 
