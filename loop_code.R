@@ -84,6 +84,35 @@ for(cntry in country_list){
 }
 
 
+dir.create("figures/") # create this directory first
+dir.create("figures/Europe/") # I can not do this 
+
+gap_to_europe<-gapminder %>% 
+  
+  filter(continent=="Europe") %>% 
+  
+  mutate(gdp_Tot = (gdpPercap*pop)) 
+
+country_list <- unique(gap_to_europe$country)
+
+for (cntry in country_list){
+  
+  #gap_to_plot <- gap_to_europe %>% 
+  
+  #filter(country ==cntry)
+  
+  my_plotEu<- ggplot(data = gap_to_europe, aes(x = year, y = gdp_Tot))+
+    
+    geom_point()+
+    
+    labs(title = (paste(cntry, "Total GDP", sep = " ")))
+  
+  ggsave(filename = paste("figures/Europe/", cntry, "_gdpTot.png", sep = "" ), 
+         plot = my_plotEu)
+  
+}
+
+
 
 
 
