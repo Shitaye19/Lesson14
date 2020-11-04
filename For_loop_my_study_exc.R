@@ -245,10 +245,82 @@ for(cntry in country_list) {
   
   ## if estimated, add that as a subtitle
   
-  if (gap_to_plot$)
+  dir.create("figures") 
+  dir.create("figures/Europe") 
   
+  ## create a list of countries. Calculations go here, not in the for loop
+  gap_europe <- gapminder_est %>%  # Here we use the gapminder_est that includes information on whether data were estimated
+    filter(continent == "Europe") %>%
+    mutate(gdpTot = gdpPercap * pop)
   
-
+  country_list <- unique(gap_europe$country) # ?unique() returns the unique values
+  
+  for (cntry in country_list) { # (cntry = country_list[1])
+    
+    ## filter the country to plot
+    gap_to_plot <- gap_europe %>%
+      filter(country == cntry)
+    
+    ## add a print message to see what's plotting
+    print(paste("Plotting", cntry))
+    
+    ## plot
+    my_plot <- ggplot(data = gap_to_plot, aes(x = year, y = gdpTot)) + 
+      geom_point() +
+      ## add title and save
+      labs(title = paste(cntry, "GDP per capita", sep = " "))
+    
+    ## if estimated, add that as a subtitle. 
+    if (any(gap_to_plot$estimated == "yes")) { # any() will return a single TRUE or FALSE
+      
+      ## add a print statement just to check
+      print(paste(cntry, "data are estimated"))
+      
+      my_plot <- my_plot +
+        labs(subtitle = "Estimated data")
+    }
+    
+    ggsave(filename = paste("figures/Europe/", cntry, "_gdpTot.png", sep = ""), 
+           plot = my_plot)
+   
+    
+   if (any(gap_to_plot$estimated == "yes")) { # any() will return a single TRUE or FALSE
+      
+      print(paste(cntry, "data are estimated"))
+      
+      my_plot <- my_plot +
+        labs(subtitle = "Estimated data")
+    } else if (any(gap_to_plot$estimated == "no")){
+      
+      print(paste(cntry, "data are reported"))
+      
+      my_plot <- my_plot +
+        labs(subtitle = "Reported data")
+      
+    }
+    
+     
+##Conditional statements
+    
+    
+    
+ 
+    
+    
+    
+    
+    
+       
+    
+est <- readr::read_csv('https://raw.githubusercontent.com/OHI-Science/data-science-training/master/data/countries_estimated.csv')
+ 
+   gapminder_est <- left_join(gapminder, est)  
+    
+    
+    
+    
+    
+     
 
 
 
